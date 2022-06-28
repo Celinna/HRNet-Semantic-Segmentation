@@ -3,21 +3,21 @@ CUDNN:
   DETERMINISTIC: false
   ENABLED: true
 GPUS: (0,1)
-OUTPUT_DIR: '/scratch/izar/yju/HRNet/output_w32'
-LOG_DIR: '/scratch/izar/yju/HRNet/log_w32'
+OUTPUT_DIR: '/scratch/izar/yju/hrnet/output_w32'
+LOG_DIR: '/scratch/izar/yju/hrnet/log_w32'
 WORKERS: 2
 PRINT_FREQ: 100
 
 DATASET:
   DATASET: cityscapes
-  ROOT: "/../../../datasets/Okutama-Swiss-dataset"
+  ROOT: "/work/vita/datasets/Okutama-Swiss-dataset/"
   TEST_SET: 'val.lst'
   TRAIN_SET: 'train.lst'
   NUM_CLASSES: 9
 MODEL:
   NAME: seg_hrnet
   ALIGN_CORNERS: False
-  PRETRAINED: '/../../../datasets/pretrained_models/hrnetv2_w32_imagenet_pretrained.pth'
+  PRETRAINED: '../../pretrained_models/hrnetv2_w32_imagenet_pretrained.pth'
   EXTRA:
     FINAL_CONV_KERNEL: 1
     STAGE1:
