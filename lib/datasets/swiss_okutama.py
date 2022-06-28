@@ -15,7 +15,7 @@ from torch.nn import functional as F
 
 from .base_dataset import BaseDataset
 
-class Cityscapes(BaseDataset):
+class SwissOkutama(BaseDataset):
     def __init__(self, 
                  root, 
                  list_path, 
@@ -31,7 +31,7 @@ class Cityscapes(BaseDataset):
                  mean=[0.485, 0.456, 0.406], 
                  std=[0.229, 0.224, 0.225]):
 
-        super(Cityscapes, self).__init__(ignore_label, base_size,
+        super(SwissOkutama, self).__init__(ignore_label, base_size,
                 crop_size, downsample_rate, scale_factor, mean, std,)
 
         self.root = root
