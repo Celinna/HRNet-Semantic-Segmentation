@@ -9,7 +9,7 @@ WORKERS: 2
 PRINT_FREQ: 100
 
 DATASET:
-  DATASET: cityscapes
+  DATASET: swiss_okutama
   ROOT: "/work/vita/datasets/Okutama-Swiss-dataset/"
   TEST_SET: 'val.lst'
   TRAIN_SET: 'train.lst'
