@@ -10,9 +10,9 @@ PRINT_FREQ: 100
 
 DATASET:
   DATASET: swiss_okutama
-  ROOT: "/work/vita/datasets/Okutama-Swiss-dataset/"
-  TEST_SET: 'val.lst'
-  TRAIN_SET: 'train.lst'
+  ROOT: "/work/vita/datasets/Okutama-Swiss-dataset"
+  TEST_SET: '/home/yju/HRNet-Semantic-Segmentation/data/list/swiss_okutama/val.lst'
+  TRAIN_SET: '/home/yju/HRNet-Semantic-Segmentation/data/list/swiss_okutama/train.lst'
   NUM_CLASSES: 9
 MODEL:
   NAME: seg_hrnet
