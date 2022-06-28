@@ -194,11 +194,11 @@ def main():
     if config.LOSS.USE_OHEM:
         criterion = OhemCrossEntropy(ignore_label=config.TRAIN.IGNORE_LABEL,
                                         thres=config.LOSS.OHEMTHRES,
-                                        min_kept=config.LOSS.OHEMKEEP,
-                                        weight=train_dataset.class_weights)
+                                        min_kept=config.LOSS.OHEMKEEP)
+#                                         weight=train_dataset.class_weights)
     else:
-        criterion = CrossEntropy(ignore_label=config.TRAIN.IGNORE_LABEL,
-                                    weight=train_dataset.class_weights)
+        criterion = CrossEntropy(ignore_label=config.TRAIN.IGNORE_LABEL)
+#                                     weight=train_dataset.class_weights)
 
     model = FullModel(model, criterion)
     if distributed:
