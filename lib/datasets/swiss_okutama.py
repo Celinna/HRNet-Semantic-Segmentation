@@ -58,24 +58,24 @@ class SwissOkutama(BaseDataset):
     
     def read_files(self):
         files = []
-        if 'test' in self.list_path:
-            for item in self.img_list:
-                image_path = item
-                name = os.path.splitext(os.path.basename(image_path[0]))[0]
-                files.append({
-                    "img": image_path[0],
-                    "name": name,
-                })
-        else:
-            for item in self.img_list:
-                image_path, label_path = item
-                name = os.path.splitext(os.path.basename(label_path))[0]
-                files.append({
-                    "img": image_path,
-                    "label": label_path,
-                    "name": name,
-                    "weight": 1
-                })
+#         if 'test' in self.list_path:
+#             for item in self.img_list:
+#                 image_path = item
+#                 name = os.path.splitext(os.path.basename(image_path[0]))[0]
+#                 files.append({
+#                     "img": image_path[0],
+#                     "name": name,
+#                 })
+#         else:
+        for item in self.img_list:
+            image_path, label_path = item
+            name = os.path.splitext(os.path.basename(label_path))[0]
+            files.append({
+                "img": image_path,
+                "label": label_path,
+                "name": name,
+                "weight": 1
+            })
         return files
         
     def convert_label(self, label, inverse=False):

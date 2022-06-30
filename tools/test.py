@@ -120,7 +120,8 @@ def main():
     mean_IoU, IoU_array, pixel_acc, mean_acc = testval(config, 
                                                        test_dataset, 
                                                        testloader, 
-                                                       model)
+                                                       model,
+                                                       sv_dir=final_output_dir)
 
     msg = 'MeanIU: {: 4.4f}, Pixel_Acc: {: 4.4f}, \
         Mean_Acc: {: 4.4f}, Class IoU: '.format(mean_IoU, 
