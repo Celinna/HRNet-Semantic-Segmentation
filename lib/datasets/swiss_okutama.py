@@ -96,11 +96,11 @@ class SwissOkutama(BaseDataset):
                            cv2.IMREAD_COLOR)
         size = image.shape
 
-        if 'test' in self.list_path:
-            image = self.input_transform(image)
-            image = image.transpose((2, 0, 1))
+#         if 'test' in self.list_path:
+#             image = self.input_transform(image)
+#             image = image.transpose((2, 0, 1))
 
-            return image.copy(), np.array(size), name
+#             return image.copy(), np.array(size), name
 
         label = cv2.imread(os.path.join(self.root, item["label"]),
                            cv2.IMREAD_GRAYSCALE)
