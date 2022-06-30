@@ -3,8 +3,8 @@ CUDNN:
   DETERMINISTIC: false
   ENABLED: true
 GPUS: (0,1)
-OUTPUT_DIR: '/scratch/izar/yju/hrnet/output_w32'
-LOG_DIR: '/scratch/izar/yju/hrnet/log_w32'
+OUTPUT_DIR: '/scratch/izar/yju/hrnet/output'
+LOG_DIR: '/scratch/izar/yju/hrnet/log'
 WORKERS: 4
 PRINT_FREQ: 100
 
