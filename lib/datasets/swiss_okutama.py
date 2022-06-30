@@ -51,7 +51,8 @@ class SwissOkutama(BaseDataset):
                               1: 0, 2: 1, 
                               3: 2, 4: 3, 
                               5: 4, 6: 5, 
-                              7: 6, 8: 7, 9: ignore_label}
+                              7: 6, 8: 7, 
+                              9: ignore_label}
         self.class_weights = torch.FloatTensor([0.0, 0.0, 0.0, 0.0,
                                                0.0, 0.0, 0.0, 0.0]).cuda()
     
@@ -187,5 +188,5 @@ class SwissOkutama(BaseDataset):
         for i in range(preds.shape[0]):
             pred = self.convert_label(preds[i], inverse=True)
             save_img = Image.fromarray(pred)
-            save_img.putpalette(palette)
+#             save_img.putpalette(palette)
             save_img.save(os.path.join(sv_path, name[i]+'.png'))

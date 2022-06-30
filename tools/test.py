@@ -116,23 +116,23 @@ def main():
         pin_memory=True)
     
     start = timeit.default_timer()
-    if 'val' in config.DATASET.TEST_SET:
-        mean_IoU, IoU_array, pixel_acc, mean_acc = testval(config, 
-                                                           test_dataset, 
-                                                           testloader, 
-                                                           model)
-    
-        msg = 'MeanIU: {: 4.4f}, Pixel_Acc: {: 4.4f}, \
-            Mean_Acc: {: 4.4f}, Class IoU: '.format(mean_IoU, 
-            pixel_acc, mean_acc)
-        logging.info(msg)
-        logging.info(IoU_array)
-    elif 'test' in config.DATASET.TEST_SET:
-        test(config, 
-             test_dataset, 
-             testloader, 
-             model,
-             sv_dir=final_output_dir)
+#     if 'val' in config.DATASET.TEST_SET:
+    mean_IoU, IoU_array, pixel_acc, mean_acc = testval(config, 
+                                                       test_dataset, 
+                                                       testloader, 
+                                                       model)
+
+    msg = 'MeanIU: {: 4.4f}, Pixel_Acc: {: 4.4f}, \
+        Mean_Acc: {: 4.4f}, Class IoU: '.format(mean_IoU, 
+        pixel_acc, mean_acc)
+    logging.info(msg)
+    logging.info(IoU_array)
+#     elif 'test' in config.DATASET.TEST_SET:
+#         test(config, 
+#              test_dataset, 
+#              testloader, 
+#              model,
+#              sv_dir=final_output_dir)
 
     end = timeit.default_timer()
     logger.info('Mins: %d' % np.int((end-start)/60))
