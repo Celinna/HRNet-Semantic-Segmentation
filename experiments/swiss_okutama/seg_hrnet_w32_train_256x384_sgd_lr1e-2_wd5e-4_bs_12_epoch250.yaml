@@ -13,7 +13,7 @@ DATASET:
   ROOT: "/work/vita/datasets/Okutama-Swiss-dataset"
   TEST_SET: '/home/yju/HRNet-Semantic-Segmentation/data/list/swiss_okutama/val.lst'
   TRAIN_SET: '/home/yju/HRNet-Semantic-Segmentation/data/list/swiss_okutama/train.lst'
-  NUM_CLASSES: 9
+  NUM_CLASSES: 8
 MODEL:
   NAME: seg_hrnet
   ALIGN_CORNERS: False
@@ -80,7 +80,7 @@ TRAIN:
   BATCH_SIZE_PER_GPU: 16
   SHUFFLE: true
   BEGIN_EPOCH: 0
-  END_EPOCH: 300
+  END_EPOCH: 250
   RESUME: true
   OPTIMIZER: sgd
   LR: 0.01
