@@ -194,11 +194,11 @@ def main():
     if config.LOSS.USE_OHEM:
         criterion = OhemCrossEntropy(ignore_label=config.TRAIN.IGNORE_LABEL,
                                         thres=config.LOSS.OHEMTHRES,
-                                        min_kept=config.LOSS.OHEMKEEP)
-#                                         weight=train_dataset.class_weights)
+                                        min_kept=config.LOSS.OHEMKEEP,
+                                        weight=train_dataset.class_weights)
     else:
-        criterion = CrossEntropy(ignore_label=config.TRAIN.IGNORE_LABEL)
-#                                     weight=train_dataset.class_weights)
+        criterion = CrossEntropy(ignore_label=config.TRAIN.IGNORE_LABEL,
+                                    weight=train_dataset.class_weights)
 
     model = FullModel(model, criterion)
     if distributed:
@@ -272,9 +272,6 @@ def main():
         current_trainloader = extra_trainloader if epoch >= config.TRAIN.END_EPOCH else trainloader
         if current_trainloader.sampler is not None and hasattr(current_trainloader.sampler, 'set_epoch'):
             current_trainloader.sampler.set_epoch(epoch)
-
-        # valid_loss, mean_IoU, IoU_array = validate(config, 
-        #             testloader, model, writer_dict)
 
         if epoch >= config.TRAIN.END_EPOCH:
             train(config, epoch-config.TRAIN.END_EPOCH, 

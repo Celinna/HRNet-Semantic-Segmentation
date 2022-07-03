@@ -53,8 +53,10 @@ class SwissOkutama(BaseDataset):
                               5: 4, 6: 5, 
                               7: 6, 8: 7, 
                               9: ignore_label}
-        self.class_weights = torch.FloatTensor([0.0, 0.0, 0.0, 0.0,
-                                               0.0, 0.0, 0.0, 0.0]).cuda()
+        
+        self.class_weights = torch.FloatTensor([5.14065138e+00, 6.43099256e-01, 5.48480332e-01,
+                                                3.48028072e-01, 9.67336063e+00, 3.87539605e-01, 
+                                                9.60787652e+00, 1.11120921e+01]).cuda()
     
     def read_files(self):
         files = []
