@@ -3,21 +3,21 @@ CUDNN:
   DETERMINISTIC: false
   ENABLED: true
 GPUS: (0,1)
-OUTPUT_DIR: '/scratch/izar/yju/hrnet/output_w32'
-LOG_DIR: '/scratch/izar/yju/hrnet/log_w32'
+OUTPUT_DIR: '/scratch/izar/yju/hrnet/output'
+LOG_DIR: '/scratch/izar/yju/hrnet/log'
 WORKERS: 4
 PRINT_FREQ: 100
 
 DATASET:
   DATASET: swiss_okutama
   ROOT: "/work/vita/datasets/Okutama-Swiss-dataset"
-  TEST_SET: '/home/yju/HRNet-Semantic-Segmentation/data/list/swiss_okutama/val.lst'
-  TRAIN_SET: '/home/yju/HRNet-Semantic-Segmentation/data/list/swiss_okutama/train.lst'
-  NUM_CLASSES: 9
+  TEST_SET: '/work/vita/datasets/Okutama-Swiss-dataset/crossval1/val.lst'
+  TRAIN_SET: '/work/vita/datasets/Okutama-Swiss-dataset/crossval1/train.lst'
+  NUM_CLASSES: 8
 MODEL:
   NAME: seg_hrnet
   ALIGN_CORNERS: False
-  PRETRAINED: '../../pretrained_models/hrnetv2_w32_imagenet_pretrained.pth'
+  PRETRAINED: '/home/yju/HRNet-Semantic-Segmentation/pretrained_models/hrnetv2_w32_imagenet_pretrained.pth'
   EXTRA:
     FINAL_CONV_KERNEL: 1
     STAGE1:

@@ -11,13 +11,13 @@ PRINT_FREQ: 100
 DATASET:
   DATASET: swiss_okutama
   ROOT: "/work/vita/datasets/Okutama-Swiss-dataset"
-  TEST_SET: '/home/yju/HRNet-Semantic-Segmentation/data/list/swiss_okutama/val.lst'
-  TRAIN_SET: '/home/yju/HRNet-Semantic-Segmentation/data/list/swiss_okutama/train.lst'
+  TEST_SET: '/work/vita/datasets/Okutama-Swiss-dataset/crossval2/val.lst'
+  TRAIN_SET: '/work/vita/datasets/Okutama-Swiss-dataset/crossval2/train.lst'
   NUM_CLASSES: 8
 MODEL:
   NAME: seg_hrnet
   ALIGN_CORNERS: False
-  PRETRAINED: '../../pretrained_models/hrnetv2_w32_imagenet_pretrained.pth'
+  PRETRAINED: '/home/yju/HRNet-Semantic-Segmentation/pretrained_models/none.pth'
   EXTRA:
     FINAL_CONV_KERNEL: 1
     STAGE1:
