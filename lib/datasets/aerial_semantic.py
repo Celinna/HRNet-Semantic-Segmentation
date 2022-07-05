@@ -15,7 +15,7 @@ from torch.nn import functional as F
 
 from .base_dataset import BaseDataset
 
-class SwissOkutama(BaseDataset):
+class AerialSemantic(BaseDataset):
     def __init__(self, 
                  root, 
                  list_path, 
@@ -28,10 +28,10 @@ class SwissOkutama(BaseDataset):
                  crop_size=(256, 384), 
                  downsample_rate=1,
                  scale_factor=16,
-                 mean=[0.485, 0.456, 0.406], 
-                 std=[0.229, 0.224, 0.225]):
+                 mean=[0.0, 0.0, 0.0], 
+                 std=[0.0, 0.0, 0.0]):
 
-        super(SwissOkutama, self).__init__(ignore_label, base_size,
+        super(AerialSemantic, self).__init__(ignore_label, base_size,
                 crop_size, downsample_rate, scale_factor, mean, std,)
 
         self.root = root
@@ -56,10 +56,12 @@ class SwissOkutama(BaseDataset):
                                   19: 18, 20: 19, 21: 20, 
                                   22: 21, 23: ignore_label}
         
-        self.class_weights = torch.FloatTensor([5.991352149327961, 0.7495225456907441, 
-                                                0.639245607409836, 0.4056215021243345, 
-                                                11.274156845836925, 0.4516716024412529, 
-                                                11.197836103816606, 12.950976812327097]).cuda()
+        self.class_weights = torch.FloatTensor([0.1183, 1.3586, 0.2262, 0.6143, 
+                                                2.1583, 5.9558, 9.07124, 0.6617, 
+                                                0.6600, 1.6541, 9.5407, 170.7932, 
+                                                5.07813, 73.2289, 4.1526, 310.7591, 
+                                                5.5883, 22.4242, 1.9594, 3.9591, 
+                                                18.9286, 1.2774]).cuda()
  
             
     
@@ -190,7 +192,7 @@ class SwissOkutama(BaseDataset):
         return palette
 
     def save_pred(self, preds, sv_path, name):
-        palette = self.get_palette(256)
+        # palette = self.get_palette(256)
         preds = np.asarray(np.argmax(preds.cpu(), axis=1), dtype=np.uint8)
         for i in range(preds.shape[0]):
             pred = self.convert_label(preds[i], inverse=True)

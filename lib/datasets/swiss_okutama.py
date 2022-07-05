@@ -189,7 +189,7 @@ class SwissOkutama(BaseDataset):
         return palette
 
     def save_pred(self, preds, sv_path, name):
-        palette = self.get_palette(256)
+        # palette = self.get_palette(256)
         preds = np.asarray(np.argmax(preds.cpu(), axis=1), dtype=np.uint8)
         for i in range(preds.shape[0]):
             pred = self.convert_label(preds[i], inverse=True)
