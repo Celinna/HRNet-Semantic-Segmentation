@@ -47,19 +47,20 @@ class SwissOkutama(BaseDataset):
         if num_samples:
             self.files = self.files[:num_samples]
 
-        self.label_mapping = {0: ignore_label, 
-                              1: 0, 2: 1, 
-                              3: 2, 4: 3, 
-                              5: 4, 6: 5, 
-                              7: 6, 8: 7, 
-                              9: ignore_label}
+        self.label_mapping = {-1: ignore_label, 0: ignore_label, 
+                                  1: 0, 2: 1, 3: 2, 4: 3, 
+                                  5: 4, 6: 5, 7: 6, 8: 7, 
+                                  9: 8, 10: 9, 11: 10, 12: 11, 
+                                  13: 12, 14: 13, 15: 14, 
+                                  16: 15, 17: 16, 18: 17, 
+                                  19: 18, 20: 19, 21: 20, 
+                                  22: 21, 23: ignore_label}
         
-        
-        self.class_weights = torch.FloatTensor([6.39009734, 0.70639623,
-                                                0.59038726, 0.50078311, 
-                                                17.07579971,  0.42550586,
-                                                7.51839971, 13.64782882]).cuda()
-    
+        self.class_weights = torch.FloatTensor([5.991352149327961, 0.7495225456907441, 
+                                                0.639245607409836, 0.4056215021243345, 
+                                                11.274156845836925, 0.4516716024412529, 
+                                                11.197836103816606, 12.950976812327097]).cuda()
+ 
             
     
     def read_files(self):
