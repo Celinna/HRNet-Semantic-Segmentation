@@ -5,19 +5,19 @@ CUDNN:
 GPUS: (0,1)
 OUTPUT_DIR: '/scratch/izar/yju/hrnet/output'
 LOG_DIR: '/scratch/izar/yju/hrnet/log'
-WORKERS: 4
+WORKERS: 2
 PRINT_FREQ: 100
 
 DATASET:
   DATASET: swiss_okutama
   ROOT: "/work/vita/datasets/Okutama-Swiss-dataset"
-  TEST_SET: '/work/vita/datasets/Okutama-Swiss-dataset/crossval2/val.lst'
-  TRAIN_SET: '/work/vita/datasets/Okutama-Swiss-dataset/crossval2/train.lst'
+  TEST_SET: '/work/vita/datasets/Okutama-Swiss-dataset/crossval3/val.lst'
+  TRAIN_SET: '/work/vita/datasets/Okutama-Swiss-dataset/crossval3/train.lst'
   NUM_CLASSES: 8
 MODEL:
   NAME: seg_hrnet
   ALIGN_CORNERS: False
-  PRETRAINED: '/home/yju/HRNet-Semantic-Segmentation/pretrained_models/hrnetv2_w32_imagenet_pretrained.pth'
+  PRETRAINED: '/home/yju/HRNet-Semantic-Segmentation/pretrained_models/hrnetv2_w18_imagenet_pretrained.pth'
   EXTRA:
     FINAL_CONV_KERNEL: 1
     STAGE1:
@@ -37,8 +37,8 @@ MODEL:
       - 4
       - 4
       NUM_CHANNELS:
-      - 32
-      - 64
+      - 18
+      - 36
       FUSE_METHOD: SUM
     STAGE3:
       NUM_MODULES: 4
@@ -49,9 +49,9 @@ MODEL:
       - 4
       - 4
       NUM_CHANNELS:
-      - 32
-      - 64
-      - 128
+      - 18
+      - 36
+      - 72
       FUSE_METHOD: SUM
     STAGE4:
       NUM_MODULES: 3
@@ -63,10 +63,10 @@ MODEL:
       - 4
       - 4
       NUM_CHANNELS:
-      - 32
-      - 64
-      - 128
-      - 256
+      - 18
+      - 36
+      - 72
+      - 144
       FUSE_METHOD: SUM
 LOSS:
   USE_OHEM: false
@@ -74,29 +74,29 @@ LOSS:
   OHEMKEEP: 131072
 TRAIN:
   IMAGE_SIZE:
-  - 256
-  - 384
-  BASE_SIZE: 512
+  - 768
+  - 1024
+  BASE_SIZE: 768
   BATCH_SIZE_PER_GPU: 16
   SHUFFLE: true
   BEGIN_EPOCH: 0
-  END_EPOCH: 300
+  END_EPOCH: 150
   RESUME: true
   OPTIMIZER: sgd
   LR: 0.01
   WD: 0.0005
   MOMENTUM: 0.9
   NESTEROV: false
-  FLIP: true
-  MULTI_SCALE: true
+  FLIP: false
+  MULTI_SCALE: false
   DOWNSAMPLERATE: 1
   IGNORE_LABEL: 255
   SCALE_FACTOR: 16
 TEST:
   IMAGE_SIZE:
-  - 256
-  - 384
-  BASE_SIZE: 512
+  - 768
+  - 1024
+  BASE_SIZE: 768
   BATCH_SIZE_PER_GPU: 16
   FLIP_TEST: false
   MULTI_SCALE: false
