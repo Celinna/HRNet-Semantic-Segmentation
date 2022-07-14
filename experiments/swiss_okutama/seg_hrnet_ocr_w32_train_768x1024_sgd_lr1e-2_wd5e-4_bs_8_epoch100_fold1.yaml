@@ -1,23 +1,23 @@
 CUDNN:
-  BENCHMARK: false
+  BENCHMARK: true
   DETERMINISTIC: false
-  ENABLED: false
+  ENABLED: true
 GPUS: (0,1)
-OUTPUT_DIR: ''
-LOG_DIR: ''
+OUTPUT_DIR: '/scratch/izar/yju/hrnet/output'
+LOG_DIR: '/scratch/izar/yju/hrnet/log'
+WORKERS: 2
 PRINT_FREQ: 100
 
 DATASET:
   DATASET: swiss_okutama
   ROOT: "/work/vita/datasets/Okutama-Swiss-dataset"
-  INFERENCE: true
-  TEST_SET: ''
-  TRAIN_SET: ''
+  TEST_SET: '/work/vita/datasets/Okutama-Swiss-dataset/crossval2/val.lst'
+  TRAIN_SET: '/work/vita/datasets/Okutama-Swiss-dataset/crossval2/train.lst'
   NUM_CLASSES: 8
 MODEL:
-  NAME: seg_hrnet
-  ALIGN_CORNERS: False
-  PRETRAINED: ''
+  NAME: seg_hrnet_ocr
+  NUM_OUTPUTS: 2
+  PRETRAINED: '/home/yju/HRNet-Semantic-Segmentation/pretrained_models/hrnetv2_w32_imagenet_pretrained.pth'
   EXTRA:
     FINAL_CONV_KERNEL: 1
     STAGE1:
@@ -68,11 +68,35 @@ MODEL:
       - 128
       - 256
       FUSE_METHOD: SUM
-
+LOSS:
+  USE_OHEM: false
+  OHEMTHRES: 0.9
+  OHEMKEEP: 131072
+TRAIN:
+  IMAGE_SIZE:
+  - 768
+  - 1024
+  BASE_SIZE: 768
+  BATCH_SIZE_PER_GPU: 8
+  SHUFFLE: true
+  BEGIN_EPOCH: 0
+  END_EPOCH: 100
+  RESUME: true
+  OPTIMIZER: sgd
+  LR: 0.01
+  WD: 0.0005
+  MOMENTUM: 0.9
+  NESTEROV: false
+  FLIP: false
+  MULTI_SCALE: false
+  DOWNSAMPLERATE: 1
+  IGNORE_LABEL: 255
+  SCALE_FACTOR: 16
 TEST:
   IMAGE_SIZE:
-  - 256
-  - 384
-  BASE_SIZE: 512
-  BATCH_SIZE_PER_GPU: 16
-  MODEL_FILE: '/home/rigi/segmentation/HRNet-Semantic-Segmentation/output/best.pth'
+  - 768
+  - 1024
+  BASE_SIZE: 768
+  BATCH_SIZE_PER_GPU: 8
+  FLIP_TEST: false
+  MULTI_SCALE: false
