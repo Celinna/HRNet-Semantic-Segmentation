@@ -5,14 +5,14 @@ CUDNN:
 GPUS: (0,1)
 OUTPUT_DIR: '/scratch/izar/yju/hrnet/output'
 LOG_DIR: '/scratch/izar/yju/hrnet/log'
-WORKERS: 4
+WORKERS: 2
 PRINT_FREQ: 100
 
 DATASET:
   DATASET: swiss_okutama
   ROOT: "/work/vita/datasets/Okutama-Swiss-dataset"
-  TEST_SET: '/work/vita/datasets/Okutama-Swiss-dataset/crossval3/val.lst'
-  TRAIN_SET: '/work/vita/datasets/Okutama-Swiss-dataset/crossval3/train.lst'
+  TEST_SET: '/work/vita/datasets/Okutama-Swiss-dataset/crossval1/val.lst'
+  TRAIN_SET: '/work/vita/datasets/Okutama-Swiss-dataset/crossval1/train.lst'
   NUM_CLASSES: 8
 MODEL:
   NAME: seg_hrnet
@@ -77,7 +77,7 @@ TRAIN:
   - 768
   - 1024
   BASE_SIZE: 768
-  BATCH_SIZE_PER_GPU: 16
+  BATCH_SIZE_PER_GPU: 4
   SHUFFLE: true
   BEGIN_EPOCH: 0
   END_EPOCH: 150
@@ -91,12 +91,13 @@ TRAIN:
   MULTI_SCALE: false
   DOWNSAMPLERATE: 1
   IGNORE_LABEL: 255
-  SCALE_FACTOR: 16
+  SCALE_FACTOR: 1
+  RANDOM_BRIGHTNESS: false
 TEST:
   IMAGE_SIZE:
   - 768
   - 1024
   BASE_SIZE: 768
-  BATCH_SIZE_PER_GPU: 16
+  BATCH_SIZE_PER_GPU: 4
   FLIP_TEST: false
   MULTI_SCALE: false
