@@ -17,7 +17,7 @@ DATASET:
 MODEL:
   NAME: seg_hrnet
   ALIGN_CORNERS: False
-  PRETRAINED: ''
+  PRETRAINED: '/home/yju/HRNet-Semantic-Segmentation/pretrained_models/hrnetv2_w32_imagenet_pretrained.pth'
   EXTRA:
     FINAL_CONV_KERNEL: 1
     STAGE1:
@@ -87,8 +87,8 @@ TRAIN:
   WD: 0.0005
   MOMENTUM: 0.9
   NESTEROV: false
-  FLIP: false
-  MULTI_SCALE: false
+  FLIP: true
+  MULTI_SCALE: true
   DOWNSAMPLERATE: 1
   IGNORE_LABEL: 255
   SCALE_FACTOR: 16
