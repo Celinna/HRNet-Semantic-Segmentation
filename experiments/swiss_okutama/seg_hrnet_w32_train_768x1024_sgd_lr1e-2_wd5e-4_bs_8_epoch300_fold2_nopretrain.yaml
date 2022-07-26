@@ -15,9 +15,9 @@ DATASET:
   TRAIN_SET: '/work/vita/datasets/Okutama-Swiss-dataset/crossval2/train.lst'
   NUM_CLASSES: 8
 MODEL:
-  NAME: seg_hrnet_ocr
-  NUM_OUTPUTS: 2
-  PRETRAINED: '/home/yju/HRNet-Semantic-Segmentation/pretrained_models/hrnetv2_w32_imagenet_pretrained.pth'
+  NAME: seg_hrnet
+  ALIGN_CORNERS: False
+  PRETRAINED: ''
   EXTRA:
     FINAL_CONV_KERNEL: 1
     STAGE1:
@@ -74,13 +74,13 @@ LOSS:
   OHEMKEEP: 131072
 TRAIN:
   IMAGE_SIZE:
-  - 768
   - 1024
-  BASE_SIZE: 768
+  - 768
+  BASE_SIZE: 1024
   BATCH_SIZE_PER_GPU: 8
   SHUFFLE: true
   BEGIN_EPOCH: 0
-  END_EPOCH: 100
+  END_EPOCH: 300
   RESUME: true
   OPTIMIZER: sgd
   LR: 0.01
@@ -94,9 +94,9 @@ TRAIN:
   SCALE_FACTOR: 16
 TEST:
   IMAGE_SIZE:
-  - 768
   - 1024
-  BASE_SIZE: 768
+  - 768
+  BASE_SIZE: 1024
   BATCH_SIZE_PER_GPU: 8
   FLIP_TEST: false
   MULTI_SCALE: false
