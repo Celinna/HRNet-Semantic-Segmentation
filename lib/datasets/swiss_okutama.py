@@ -28,11 +28,12 @@ class SwissOkutama(BaseDataset):
                  crop_size=(256, 384), 
                  downsample_rate=1,
                  scale_factor=16,
-                 mean=[0.485, 0.456, 0.406], 
-                 std=[0.229, 0.224, 0.225]):
+                 mean=[0.39313033, 0.48066333, 0.45113695], # for BGR channels
+                 std=[0.1179, 0.1003, 0.1139],
+                 inference=False):
 
         super(SwissOkutama, self).__init__(ignore_label, base_size,
-                crop_size, downsample_rate, scale_factor, mean, std,)
+                crop_size, downsample_rate, scale_factor, mean, std)
 
         self.root = root
         self.list_path = list_path
@@ -41,11 +42,17 @@ class SwissOkutama(BaseDataset):
         self.multi_scale = multi_scale
         self.flip = flip
         
-        self.img_list = [line.strip().split() for line in open(list_path)]
+        if not inference:
+            self.img_list = [line.strip().split() for line in open(list_path)]
 
-        self.files = self.read_files()
-        if num_samples:
-            self.files = self.files[:num_samples]
+            self.files = self.read_files()
+            if num_samples:
+                self.files = self.files[:num_samples]
+                
+            self.class_weights = torch.FloatTensor([6.39009734, 0.70639623,
+                                                    0.59038726, 0.50078311, 
+                                                    17.07579971,  0.42550586,
+                                                    7.51839971, 13.64782882]).cuda()    
 
         self.label_mapping = {0: ignore_label, 
                               1: 0, 2: 1, 
@@ -54,12 +61,22 @@ class SwissOkutama(BaseDataset):
                               7: 6, 8: 7, 
                               9: ignore_label}
         
-        
-        self.class_weights = torch.FloatTensor([6.39009734, 0.70639623,
-                                                0.59038726, 0.50078311, 
-                                                17.07579971,  0.42550586,
-                                                7.51839971, 13.64782882]).cuda()
-    
+           
+        self.colormap = {
+                        # in RGB order
+                        "Background": [0, 0, 0], 
+                        "Outdoor structures": [237, 237, 237],
+                        "Buildings": [181, 0, 0],
+                        "Paved ground": [135, 135, 135],
+                        "Non-paved ground": [189, 107, 0],
+                        "Train tracks": [128, 0, 128],
+                        "Plants": [31, 123, 22],
+                        "Wheeled vehicles": [6, 0, 130],
+                        "Water": [0, 168, 255],
+                        "People": [240, 255, 0]
+                    }
+        self.idx2color = {k:v for k,v in enumerate(list(self.colormap.values()))}
+ 
             
     
     def read_files(self):
@@ -117,6 +134,7 @@ class SwissOkutama(BaseDataset):
 
         return image.copy(), label.copy(), np.array(size), name
 
+
     def multi_scale_inference(self, config, model, image, scales=[1], flip=False):
         batch, _, ori_height, ori_width = image.size()
         assert batch == 1, "only supporting batchsize 1."
@@ -133,7 +151,7 @@ class SwissOkutama(BaseDataset):
                 
             if scale <= 1.0:
                 new_img = new_img.transpose((2, 0, 1))
-                new_img = np.expand_dims(new_img, axis=0)
+                new_img = np.expand_dims(new_img, axis=0).astype(np.float32)
                 new_img = torch.from_numpy(new_img)
                 preds = self.inference(config, model, new_img, flip)
                 preds = preds[:, :, 0:height, 0:width]
@@ -171,28 +189,32 @@ class SwissOkutama(BaseDataset):
             )            
             final_pred += preds
         return final_pred
+        
 
-    def get_palette(self, n):
-        palette = [0] * (n * 3)
-        for j in range(0, n):
-            lab = j
-            palette[j * 3 + 0] = 0
-            palette[j * 3 + 1] = 0
-            palette[j * 3 + 2] = 0
-            i = 0
-            while lab:
-                palette[j * 3 + 0] |= (((lab >> 0) & 1) << (7 - i))
-                palette[j * 3 + 1] |= (((lab >> 1) & 1) << (7 - i))
-                palette[j * 3 + 2] |= (((lab >> 2) & 1) << (7 - i))
-                i += 1
-                lab >>= 3
-        return palette
+    def category2mask(self, img):
+        """ Convert a category image to color mask """
+        if len(img) == 3:
+            if img.shape[2] == 3:
+                img = img[:, :, 0]
+    
+        mask = np.zeros(img.shape[:2] + (3, ), dtype='uint8')
+    
+        for category, mask_color in self.idx2color.items():
+            locs = np.where(img == category)
+            mask[locs] = mask_color
+        
+        return mask
+    
 
-    def save_pred(self, preds, sv_path, name):
-        # palette = self.get_palette(256)
+    def save_pred(self, preds, sv_path, name, rgb=False):
         preds = np.asarray(np.argmax(preds.cpu(), axis=1), dtype=np.uint8)
         for i in range(preds.shape[0]):
             pred = self.convert_label(preds[i], inverse=True)
-            save_img = Image.fromarray(pred)
-#             save_img.putpalette(palette)
-            save_img.save(os.path.join(sv_path, name[i]+'.png'))
+            if rgb:
+                mask_rgb = self.category2mask(pred)
+                save_img = Image.fromarray(mask_rgb)
+                save_img.save(os.path.join(sv_path, name +'.png'))
+            else:
+                save_img = Image.fromarray(pred)
+                save_img.save(os.path.join(sv_path, name[i]+'.png'))
+            
