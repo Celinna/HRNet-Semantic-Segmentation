@@ -159,6 +159,7 @@ def testval(config, test_dataset, testloader, model,
         for index, batch in enumerate(tqdm(testloader)):
             image, label, _, name, *border_padding = batch
             size = label.size()
+            logging.info(str(name) + ' image size is ' + str(size))
             pred = test_dataset.multi_scale_inference(
                 config,
                 model,
