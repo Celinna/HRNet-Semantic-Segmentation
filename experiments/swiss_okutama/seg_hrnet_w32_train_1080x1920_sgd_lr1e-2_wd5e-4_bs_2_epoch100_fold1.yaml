@@ -11,12 +11,12 @@ PRINT_FREQ: 100
 DATASET:
   DATASET: swiss_okutama
   ROOT: "/work/vita/datasets/Okutama-Swiss-dataset"
-  TEST_SET: '/work/vita/datasets/Okutama-Swiss-dataset/crossval2/val.lst'
-  TRAIN_SET: '/work/vita/datasets/Okutama-Swiss-dataset/crossval2/train.lst'
+  TEST_SET: '/work/vita/datasets/Okutama-Swiss-dataset/crossval1/val.lst'
+  TRAIN_SET: '/work/vita/datasets/Okutama-Swiss-dataset/crossval1/train.lst'
   NUM_CLASSES: 8
 MODEL:
-  NAME: seg_hrnet_ocr
-  NUM_OUTPUTS: 2
+  NAME: seg_hrnet
+  ALIGN_CORNERS: False
   PRETRAINED: '/home/yju/HRNet-Semantic-Segmentation/pretrained_models/hrnetv2_w32_imagenet_pretrained.pth'
   EXTRA:
     FINAL_CONV_KERNEL: 1
@@ -72,13 +72,12 @@ LOSS:
   USE_OHEM: false
   OHEMTHRES: 0.9
   OHEMKEEP: 131072
-  BALANCE_WEIGHTS: [0.4, 1]
 TRAIN:
   IMAGE_SIZE:
   - 1920
   - 1080
   BASE_SIZE: 1920
-  BATCH_SIZE_PER_GPU: 4
+  BATCH_SIZE_PER_GPU: 2
   SHUFFLE: true
   BEGIN_EPOCH: 0
   END_EPOCH: 100
@@ -98,6 +97,6 @@ TEST:
   - 1920
   - 1080
   BASE_SIZE: 1920
-  BATCH_SIZE_PER_GPU: 4
+  BATCH_SIZE_PER_GPU: 2
   FLIP_TEST: false
   MULTI_SCALE: false
