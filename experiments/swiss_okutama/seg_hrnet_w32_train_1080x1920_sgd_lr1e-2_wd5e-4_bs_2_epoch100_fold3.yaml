@@ -97,8 +97,6 @@ TEST:
   - 1920
   - 1080
   BASE_SIZE: 1920
-  FLIP: false
-  MULTI_SCALE: false
   BATCH_SIZE_PER_GPU: 2
   FLIP_TEST: false
   MULTI_SCALE: false

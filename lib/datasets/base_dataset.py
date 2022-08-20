@@ -159,16 +159,16 @@ class BaseDataset(data.Dataset):
             image, label = self.multi_scale_aug(image, label,
                                                 rand_scale=rand_scale)
 
-        image = self.random_brightness(image)
+        # image = self.random_brightness(image)
         image = self.input_transform(image)
         label = self.label_transform(label)
 
         image = image.transpose((2, 0, 1))
 
-        if is_flip:
-            flip = np.random.choice(2) * 2 - 1
-            image = image[:, :, ::flip]
-            label = label[:, ::flip]
+        # if is_flip:
+        #     flip = np.random.choice(2) * 2 - 1
+        #     image = image[:, :, ::flip]
+        #     label = label[:, ::flip]
 
         if self.downsample_rate != 1:
             label = cv2.resize(
