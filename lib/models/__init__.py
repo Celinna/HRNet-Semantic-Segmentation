@@ -11,3 +11,4 @@ from __future__ import print_function
 import models.seg_hrnet
 import models.seg_hrnet_ocr
 import models.seg_hrnet_att
+import models.seg_hrnet_dscs
