@@ -11,12 +11,11 @@ PRINT_FREQ: 100
 DATASET:
   DATASET: swiss_okutama
   ROOT: "/work/vita/datasets/Okutama-Swiss-dataset"
-  TEST_SET: '/work/vita/datasets/Okutama-Swiss-dataset/crossval1/val.lst'
-  TRAIN_SET: '/work/vita/datasets/Okutama-Swiss-dataset/crossval1/train.lst'
+  TEST_SET: '/work/vita/datasets/Okutama-Swiss-dataset/crossval2/val.lst'
+  TRAIN_SET: '/work/vita/datasets/Okutama-Swiss-dataset/crossval2/train.lst'
   NUM_CLASSES: 8
 MODEL:
-  NAME: seg_hrnet_ocr
-  NUM_OUTPUTS: 2
+  NAME: seg_hrnet
   ALIGN_CORNERS: False
   PRETRAINED: '/home/yju/HRNet-Semantic-Segmentation/pretrained_models/hrnetv2_w32_imagenet_pretrained.pth'
   EXTRA:
@@ -73,7 +72,6 @@ LOSS:
   USE_OHEM: false
   OHEMTHRES: 0.9
   OHEMKEEP: 131072
-  BALANCE_WEIGHTS: [0.4, 1]
 TRAIN:
   IMAGE_SIZE:
   - 1920
